@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "192005778984",
+    "project_id": "chatme-app-7f1a5",
+    "storage_bucket": "chatme-app-7f1a5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192005778984:android:b6098afd14eeb0b466cf1d",
+        "android_client_info": {
+          "package_name": "com.example.chat_me"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzbKnK3AB75iC9rrr4fK1vFB4upYgX29k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192005778984:android:59a3865b602fe7d866cf1d",
+        "android_client_info": {
+          "package_name": "com.tahtawy.chat_me"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzbKnK3AB75iC9rrr4fK1vFB4upYgX29k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
