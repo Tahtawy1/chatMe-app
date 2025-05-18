@@ -8,31 +8,38 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(DevicePreview(enabled: !kReleaseMode, builder: (context) => MyApp()));
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  bool isFirstTime = sharedPreferences.getBool('isFirstTime') ?? true;
+  runApp(
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => MyApp(isFirstTime: isFirstTime),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  final _auth = FirebaseAuth.instance;
+  final bool isFirstTime;
+  const MyApp({super.key, required this.isFirstTime});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       debugShowCheckedModeBanner: false,
       title: 'ChatMe app',
       useInheritedMediaQuery: true,
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       initialRoute:
-          _auth.currentUser != null
-              ? ChatScreen.screenRoute
-              : WelcomeScreen.screenRoute,
+          isFirstTime ? WelcomeView.screenRoute : ChatScreen.screenRoute,
       routes: {
-        WelcomeScreen.screenRoute: (context) => WelcomeScreen(),
+        WelcomeView.screenRoute: (context) => WelcomeView(),
         LogInScreen.screenRoute: (context) => LogInScreen(),
         SignUpScreen.screenRoute: (context) => SignUpScreen(),
         ChatScreen.screenRoute: (context) => ChatScreen(),
