@@ -1,5 +1,5 @@
 import 'package:chat_me/views/edit_your_profile.dart';
-import 'package:chat_me/views/widgets/my_button.dart';
+import 'package:chat_me/views/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -121,7 +121,8 @@ class _SignUpScreen extends State<SignUpScreen> {
                 ),
               ),
               SizedBox(height: 20),
-              MyButton(
+              CustomButton
+              (
                 // color: const Color.fromARGB(255, 115, 237, 180),
                 title: 'Register',
                 onPressed: () async {

@@ -1,13 +1,11 @@
 import 'package:chat_me/views/log_in_screen.dart';
-import 'package:chat_me/views/sign_up_screen.dart';
-import 'package:chat_me/views/widgets/my_button.dart';
+import 'package:chat_me/views/widgets/custom_button.dart';
+import 'package:chat_me/views/widgets/custom_text.dart';
+import 'package:chat_me/views/widgets/phone_maket.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomeViewBody extends StatelessWidget {
-  const WelcomeViewBody({
-    super.key,
-  });
+  const WelcomeViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +15,7 @@ class WelcomeViewBody extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'Welcome to ',
-              style: TextStyle(color: Colors.black, fontSize: 26),
-            ),
+            CustomText(text: 'Welcome to ', size: 26),
             Text(
               'ChatMe ',
               style: TextStyle(
@@ -31,37 +26,17 @@ class WelcomeViewBody extends StatelessWidget {
                 shadows: [Shadow(color: Colors.black, offset: Offset(2, 3))],
               ),
             ),
-            Text('app!', style: TextStyle(color: Colors.black, fontSize: 26)),
+            CustomText(text: 'app!', size: 26),
           ],
         ),
         SizedBox(height: 5),
-        Text(
-          'Start chatting with your friends now. 💬!',
-          style: TextStyle(color: Colors.black, fontSize: 19),
-        ),
+        CustomText(text: 'Start chatting with your friends now. 💬!', size: 19),
         SizedBox(height: 15),
-        PhysicalModel(
-          shape: BoxShape.circle,
-          color: Colors.transparent,
-          elevation: 50,
-          shadowColor: Colors.black,
-          borderRadius: BorderRadius.circular(100),
-          child: SizedBox(
-            height: 500,
-            child: Image.asset('images/Maket.png'),
-          ),
-        ),
+        PhoneMaket(),
         SizedBox(height: 10),
-        Text(
-          'Get Started',
-          style: TextStyle(
-            fontSize: 24,
-            fontFamily: 'JosefinSans',
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        CustomText(text: 'Get Started', size: 24),
         SizedBox(height: 10),
-        MyButton(
+        CustomButton(
           title: 'Log in',
           onPressed:
               () => Navigator.pushReplacementNamed(
@@ -70,28 +45,13 @@ class WelcomeViewBody extends StatelessWidget {
               ),
         ),
         SizedBox(height: 10),
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black),
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: MaterialButton(
-            elevation: 5,
-            onPressed: () async {
-              SharedPreferences sharedPreferences =
-                  await SharedPreferences.getInstance();
-              await sharedPreferences.setBool('isFirstTime', false);
-              Navigator.pushReplacementNamed(
-                context,
-                SignUpScreen.screenRoute,
-              );
-            },
-            minWidth: 200,
-            height: 38,
-            child: Text(
-              'Sign up',
-              style: TextStyle(fontSize: 18, fontFamily: 'JosefinSans'),
-            ),
+        CustomButton(
+          title: 'Sign up',
+          width: 200,
+          onPressed:
+            () => Navigator.pushReplacementNamed(
+              context,
+              LogInScreen.screenRoute,
           ),
         ),
       ],

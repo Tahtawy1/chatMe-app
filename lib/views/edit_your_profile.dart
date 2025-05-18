@@ -1,4 +1,4 @@
-import 'package:chat_me/views/widgets/my_button.dart';
+import 'package:chat_me/views/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class EditYourProfile extends StatefulWidget {
