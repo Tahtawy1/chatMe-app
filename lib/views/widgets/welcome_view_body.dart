@@ -15,7 +15,7 @@ class WelcomeViewBody extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CustomText(text: 'Welcome to ', size: 26),
+            CustomText(text: 'Welcome to ', size: 26, fontWeight: FontWeight.normal,),
             Text(
               'ChatMe ',
               style: TextStyle(
@@ -26,15 +26,15 @@ class WelcomeViewBody extends StatelessWidget {
                 shadows: [Shadow(color: Colors.black, offset: Offset(2, 3))],
               ),
             ),
-            CustomText(text: 'app!', size: 26),
+            CustomText(text: 'app!', size: 26, fontWeight: FontWeight.normal,),
           ],
         ),
         SizedBox(height: 5),
-        CustomText(text: 'Start chatting with your friends now. 💬!', size: 19),
+        CustomText(text: 'Start chatting with your friends now. 💬!', size: 19, fontWeight: FontWeight.normal,),
         SizedBox(height: 15),
         PhoneMaket(),
         SizedBox(height: 10),
-        CustomText(text: 'Get Started', size: 24),
+        CustomText(text: 'Get Started', size: 24, fontWeight: FontWeight.bold,),
         SizedBox(height: 10),
         CustomButton(
           title: 'Log in',

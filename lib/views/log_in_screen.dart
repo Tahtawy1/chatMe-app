@@ -1,7 +1,12 @@
 import 'package:chat_me/views/chat_screen.dart';
+import 'package:chat_me/views/sign_up_screen.dart';
 import 'package:chat_me/views/widgets/custom_button.dart';
+import 'package:chat_me/views/widgets/custom_text.dart';
+import 'package:chat_me/views/widgets/custom_text_field.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class LogInScreen extends StatefulWidget {
@@ -13,10 +18,18 @@ class LogInScreen extends StatefulWidget {
 }
 
 class _LogInScreen extends State<LogInScreen> {
+  TextEditingController name = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
+
   final _auth = FirebaseAuth.instance;
-  late String email;
-  late String password;
+  // late String email;
+  // late String password;
+  String? errMessage;
   bool isSpinner = false;
+  AutovalidateMode autovalidate = AutovalidateMode.onUserInteraction;
+  final GlobalKey<FormState> _keyForm = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,95 +43,159 @@ class _LogInScreen extends State<LogInScreen> {
             children: [
               Container(
                 alignment: Alignment.center,
-                height: 250,
+                height: 200,
                 child: Image.asset('images/logo.png'),
               ),
               SizedBox(height: 30),
               SizedBox(
                 width: 340,
-                child: TextField(
-                  cursorHeight: 20,
-                  onChanged: (value) {
-                    email = value;
-                  },
-                  style: TextStyle(fontSize: 20, color: Colors.black),
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    
-                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                    labelText: 'Enter your email',
-                    labelStyle: TextStyle(fontSize: 16, fontFamily: 'JosefinSans', fontWeight: FontWeight.w800),
-                    border: UnderlineInputBorder(
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: const Color.fromARGB(255, 115, 237, 180),
-                        width: 2,
+                child: Form(
+                  key: _keyForm,
+                  child: Column(
+                    children: [
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: CustomText(
+                          text: 'Email adress',
+                          size: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: const Color.fromARGB(255, 103, 185, 226),
-                        width: 1,
+                      SizedBox(height: 5),
+                      CustomTextField(
+                        hintText: 'Enter your email',
+                        keyboardType: TextInputType.emailAddress,
+                        autovalidate: autovalidate,
+                        validator: (value) {
+                          if (value?.isEmpty ?? true) {
+                            return 'Please enter your email';
+                          }
+                          if (!EmailValidator.validate(value!)) {
+                            return 'Invalid email format';
+                          }
+                          return null;
+                        },
+                        // onSaved: (value) {
+                        //   email = value!;
+                        // },
+                        controller: email,
                       ),
-                    ),
+                      if (errMessage != null)
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(8),
+                              child: Text(
+                                errMessage!,
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                      SizedBox(height: 14),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: CustomText(
+                          text: 'Password',
+                          size: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      CustomTextField(
+                        hintText: 'Enter your password',
+                        isPasswordField: true,
+                        keyboardType: TextInputType.visiblePassword,
+                        autovalidate: autovalidate,
+                        validator: (value) {
+                          if (value?.isEmpty ?? true) {
+                            return 'Please enter your password';
+                          }
+                          if (value!.length < 8) {
+                            return 'Password must be at least 8 characters';
+                          }
+                          return null;
+                        },
+                        // onSaved: (value) {
+                        //   password = value!;
+                        // },
+                        controller: password,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 5),
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            'Forgot password?',
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              SizedBox(height: 25),
-              SizedBox(
-                width: 340,
-                child: TextField(
-                  obscureText: true,
-                  cursorHeight: 20,
-                  onChanged: (value) {
-                    password = value;
-                  },
-                  style: TextStyle(fontSize: 20, color: Colors.black),
-                  decoration: InputDecoration(
-                    
-                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                    labelText: 'Enter your password',
-                    labelStyle: TextStyle(fontSize: 16, fontFamily: 'JosefinSans', fontWeight: FontWeight.w800 ),
-                    border: UnderlineInputBorder(
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: const Color.fromARGB(255, 115, 237, 180),
-                        width: 2,
-                      ),
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: const Color.fromARGB(255, 103, 185, 226),
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                ),
+              SizedBox(height: 15),
+              Text(
+                'OR LOGIN WITH',
+                style: TextStyle(fontSize: 16, color: Colors.grey[400]),
               ),
-              SizedBox(height: 40),
-              CustomButton(
-                title: 'Login',
-                onPressed: () async {
-                  try {
-                    setState(() {
-                      isSpinner = true;
-                    });
-                    final user = await _auth.createUserWithEmailAndPassword(
-                      email: email,
-                      password: password,
-                    );
-                    setState(() {
-                      isSpinner = false;
-                    });
-                    Navigator.pushNamed(context, ChatScreen.screenRoute);
-                  } catch (e) {
-                    print(e);
-                  }
-                },
+              SizedBox(height: 5),
+              IconButton(
+                onPressed: () {},
+                icon: FaIcon(FontAwesomeIcons.google, size: 36),
+              ),
+              SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomButton(
+                    title: 'Login',
+                    width: 150,
+                    onPressed: () async {
+                      if (_keyForm.currentState!.validate()) {
+                        try {
+                          setState(() {
+                            isSpinner = true;
+                          });
+                          final credential = await FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                                email: email.text,
+                                password: password.text,
+                              );
+                          setState(() {
+                            isSpinner = false;
+                            errMessage = null;
+                          });
+                          Navigator.pushNamed(context, ChatScreen.screenRoute);
+                        } on FirebaseAuthException catch (e) {
+                          String message = 'Incorrect email or password. Please try again';
+                          setState(() {
+                            isSpinner = false;
+                            errMessage = message;
+                          });
+                        }
+                      }
+                    },
+                  ),
+                  SizedBox(width: 16),
+                  CustomButton(
+                    title: 'Sign in',
+                    width: 150,
+                    isNotSelected: true,
+                    onPressed:
+                        () => Navigator.pushNamed(
+                          context,
+                          SignUpScreen.screenRoute,
+                        ),
+                  ),
+                ],
               ),
             ],
           ),
