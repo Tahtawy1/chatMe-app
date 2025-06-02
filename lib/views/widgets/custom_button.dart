@@ -8,27 +8,24 @@ class CustomButton extends StatelessWidget {
     super.key,
     required this.title,
     required this.onPressed,
-    this.width = 220,  this.isNotSelected = false,
+    this.width = 220,
+    // this.isNotSelected = false,
+    this.color = const [Colors.white, Colors.white],
+    this.textColor = Colors.black,
   });
   final String title;
   final VoidCallback onPressed;
   final double width;
-  final bool isNotSelected;
+  final List<Color> color;
+  final Color textColor;
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors:
-          isNotSelected
-          ?[Colors.white, Colors.white]
-          :[color1, color2],
-        ),
+        gradient: LinearGradient(colors: color),
         borderRadius: BorderRadius.circular(20),
-        border: isNotSelected
-            ?Border.all(color: Colors.black)
-            :Border.all(color: Colors.transparent)
-
+        border: Border.all(color: Colors.black),
+        //Border.all(color: Colors.transparent),
       ),
       child: MaterialButton(
         elevation: 5,
@@ -37,7 +34,11 @@ class CustomButton extends StatelessWidget {
         height: 40,
         child: Text(
           title,
-          style: TextStyle(fontSize: 20, fontFamily: 'JosefinSans'),
+          style: TextStyle(
+            fontSize: 20,
+            fontFamily: 'JosefinSans',
+            color: textColor,
+          ),
         ),
       ),
     );

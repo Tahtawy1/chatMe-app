@@ -1,5 +1,6 @@
-import 'package:chat_me/views/chat_screen.dart';
+import 'package:chat_me/views/chat_view.dart';
 import 'package:chat_me/views/edit_your_profile.dart';
+import 'package:chat_me/views/email_verified_view.dart';
 import 'package:chat_me/views/sign_up_screen.dart';
 import 'package:chat_me/views/log_in_screen.dart';
 import 'package:chat_me/views/welcome_screen.dart';
@@ -36,14 +37,15 @@ class MyApp extends StatelessWidget {
       useInheritedMediaQuery: true,
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
-      initialRoute:
-          isFirstTime ? WelcomeView.screenRoute : ChatScreen.screenRoute,
+      initialRoute: 
+          isFirstTime ? 'welcome_view' : 'chat_view',
       routes: {
-        WelcomeView.screenRoute: (context) => WelcomeView(),
-        LogInScreen.screenRoute: (context) => LogInScreen(),
-        SignUpScreen.screenRoute: (context) => SignUpScreen(),
-        ChatScreen.screenRoute: (context) => ChatScreen(),
-        EditYourProfile.screenRoute: (context) => EditYourProfile(),
+        'welcome_view': (context) => WelcomeView(),
+        'log_in_view': (context) => LogInScreen(),
+        'sign_up_view': (context) => SignUpScreen(),
+        'chat_view': (context) => ChatView(),
+        'edit_your_profile': (context) => EditYourProfile(),
+        'email_verified_view': (context) => EmailVerifiedView(),
       },
     );
   }

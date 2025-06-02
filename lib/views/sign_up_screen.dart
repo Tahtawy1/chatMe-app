@@ -1,4 +1,5 @@
-import 'package:chat_me/views/chat_screen.dart';
+import 'package:chat_me/views/chat_view.dart';
+import 'package:chat_me/views/email_verified_view.dart';
 import 'package:chat_me/views/log_in_screen.dart';
 import 'package:chat_me/views/widgets/custom_button.dart';
 import 'package:chat_me/views/widgets/custom_text.dart';
@@ -10,7 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class SignUpScreen extends StatefulWidget {
-  static const String screenRoute = 'registration_screen';
+  static const String screenRoute = 'sign_up_view';
   const SignUpScreen({super.key});
 
   @override
@@ -23,9 +24,6 @@ class _SignUpScreen extends State<SignUpScreen> {
   TextEditingController password = TextEditingController();
   TextEditingController name = TextEditingController();
 
-  // late String name;
-  // late String email;
-  // late String password;
   bool isSpinner = false;
   AutovalidateMode autovalidate = AutovalidateMode.onUserInteraction;
   final GlobalKey<FormState> _keyForm = GlobalKey();
@@ -72,7 +70,6 @@ class _SignUpScreen extends State<SignUpScreen> {
                           }
                           return null;
                         },
-                        // onSaved: (value) => name.text = value!,
                         controller: name,
                       ),
                       SizedBox(height: 14),
@@ -98,9 +95,6 @@ class _SignUpScreen extends State<SignUpScreen> {
                           }
                           return null;
                         },
-                        // onSaved: (value) {
-                        //   email = value!;
-                        // },
                         controller: email,
                       ),
                       SizedBox(height: 14),
@@ -127,9 +121,6 @@ class _SignUpScreen extends State<SignUpScreen> {
                           }
                           return null;
                         },
-                        // onSaved: (value) {
-                        //   password = value!;
-                        // },
                         controller: password,
                       ),
                     ],
@@ -151,7 +142,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CustomButton(
-                    title: 'Sign in',
+                    title: 'Sign up',
                     width: 150,
                     onPressed: () async {
                       print(email.text);
@@ -163,29 +154,30 @@ class _SignUpScreen extends State<SignUpScreen> {
                           });
                           final user = await _auth
                               .createUserWithEmailAndPassword(
-                                email: email.text.trim(),
+                                email: email.text,
                                 password: password.text,
                               );
+                          await FirebaseAuth.instance.currentUser!.sendEmailVerification();
                           setState(() {
                             isSpinner = false;
                           });
-                          Navigator.pushNamed(context, ChatScreen.screenRoute);
                         } catch (e) {
                           print(e);
                         }
                       }
+                        Navigator.pushReplacementNamed(
+                          context,
+                          EmailVerifiedView.screenRoute,
+                        );
                     },
                   ),
                   SizedBox(width: 16),
                   CustomButton(
                     title: 'Login',
                     width: 150,
-                    isNotSelected: true,
-                    onPressed:
-                        () => Navigator.pushNamed(
-                          context,
-                          LogInScreen.screenRoute,
-                        ),
+                    onPressed: () {
+                      () => Navigator.pushNamed(context, 'log_view');
+                    },
                   ),
                 ],
               ),

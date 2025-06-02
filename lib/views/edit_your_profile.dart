@@ -2,7 +2,7 @@ import 'package:chat_me/views/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class EditYourProfile extends StatefulWidget {
-  static const String screenRoute = 'EditYourProfile';
+  static const String screenRoute = 'edit_your_profile';
 
   @override
   State<EditYourProfile> createState() => _EditYourProfileState();

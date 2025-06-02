@@ -4,15 +4,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 late User signedInUser; // This will give us the email
 
-class ChatScreen extends StatefulWidget {
-  static const String screenRoute = 'chat_screen';
-  const ChatScreen({super.key});
+class ChatView extends StatefulWidget {
+  static const String screenRoute = 'chat_view';
+  const ChatView({super.key});
 
   @override
-  State<ChatScreen> createState() => _ChatScreen();
+  State<ChatView> createState() => _ChatView();
 }
 
-class _ChatScreen extends State<ChatScreen> {
+class _ChatView extends State<ChatView> {
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
   String? messageText; // This will give us the message

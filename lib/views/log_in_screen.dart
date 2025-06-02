@@ -1,4 +1,5 @@
-import 'package:chat_me/views/chat_screen.dart';
+import 'package:chat_me/views/chat_view.dart';
+import 'package:chat_me/views/email_verified_view.dart';
 import 'package:chat_me/views/sign_up_screen.dart';
 import 'package:chat_me/views/widgets/custom_button.dart';
 import 'package:chat_me/views/widgets/custom_text.dart';
@@ -10,7 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class LogInScreen extends StatefulWidget {
-  static const String screenRoute = 'log_in_screen';
+  static const String screenRoute = 'log_in_view';
   const LogInScreen({super.key});
 
   @override
@@ -23,8 +24,6 @@ class _LogInScreen extends State<LogInScreen> {
   TextEditingController password = TextEditingController();
 
   final _auth = FirebaseAuth.instance;
-  // late String email;
-  // late String password;
   String? errMessage;
   bool isSpinner = false;
   AutovalidateMode autovalidate = AutovalidateMode.onUserInteraction;
@@ -121,9 +120,6 @@ class _LogInScreen extends State<LogInScreen> {
                           }
                           return null;
                         },
-                        // onSaved: (value) {
-                        //   password = value!;
-                        // },
                         controller: password,
                       ),
                       Container(
@@ -156,7 +152,7 @@ class _LogInScreen extends State<LogInScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CustomButton(
-                    title: 'Login',
+                    title: 'Log in',
                     width: 150,
                     onPressed: () async {
                       if (_keyForm.currentState!.validate()) {
@@ -173,9 +169,12 @@ class _LogInScreen extends State<LogInScreen> {
                             isSpinner = false;
                             errMessage = null;
                           });
-                          Navigator.pushNamed(context, ChatScreen.screenRoute);
+                          FirebaseAuth.instance.currentUser!.emailVerified
+                              ? Navigator.pushNamed(context, 'chat_view')
+                              : Navigator.pushNamed(context, 'email_verified_view');
                         } on FirebaseAuthException catch (e) {
-                          String message = 'Incorrect email or password. Please try again';
+                          String message =
+                              'Incorrect email or password. Please try again';
                           setState(() {
                             isSpinner = false;
                             errMessage = message;
@@ -186,9 +185,8 @@ class _LogInScreen extends State<LogInScreen> {
                   ),
                   SizedBox(width: 16),
                   CustomButton(
-                    title: 'Sign in',
+                    title: 'Sign up',
                     width: 150,
-                    isNotSelected: true,
                     onPressed:
                         () => Navigator.pushNamed(
                           context,

@@ -41,7 +41,7 @@ class WelcomeViewBody extends StatelessWidget {
           onPressed:
               () => Navigator.pushReplacementNamed(
                 context,
-                LogInScreen.screenRoute,
+                'log_in_view',
               ),
         ),
         SizedBox(height: 10),
@@ -51,7 +51,7 @@ class WelcomeViewBody extends StatelessWidget {
           onPressed:
             () => Navigator.pushReplacementNamed(
               context,
-              LogInScreen.screenRoute,
+              'sign_up_view',
           ),
         ),
       ],
