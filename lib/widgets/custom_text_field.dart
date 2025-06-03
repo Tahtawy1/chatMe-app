@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
@@ -8,6 +9,7 @@ class CustomTextField extends StatelessWidget {
   final bool isPasswordField;
   final AutovalidateMode autovalidate;
   final TextEditingController controller;
+  final bool isUsernameField;
   const CustomTextField({
     super.key,
     required this.hintText,
@@ -16,12 +18,17 @@ class CustomTextField extends StatelessWidget {
     required this.keyboardType,
     this.isPasswordField = false,
     required this.autovalidate,
-    required this.controller
+    required this.controller,
+    this.isUsernameField = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      inputFormatters: [
+        if(isUsernameField)
+          FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9_]'))
+      ],
       cursorHeight: 20,
       obscureText: isPasswordField,
       autovalidateMode: autovalidate,
@@ -32,7 +39,7 @@ class CustomTextField extends StatelessWidget {
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(horizontal: 10),
         hintText: hintText,
-        hintStyle: TextStyle(fontSize: 16,),
+        hintStyle: TextStyle(fontSize: 16),
         border: OutlineInputBorder(),
         focusedBorder: outLineInputBorder(
           const Color.fromARGB(255, 115, 237, 180),

@@ -1,8 +1,10 @@
-import 'package:chat_me/views/widgets/custom_button.dart';
+import 'package:chat_me/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class EditYourProfile extends StatefulWidget {
   static const String screenRoute = 'edit_your_profile';
+
+  const EditYourProfile({super.key});
 
   @override
   State<EditYourProfile> createState() => _EditYourProfileState();
@@ -75,7 +77,6 @@ class _EditYourProfileState extends State<EditYourProfile> {
               ),
             ),
           ),
-          // MyButton(color: Color.lerp(color1, color2, mix)!, title: 'Continue', onPressed: ()=> ChatScreen.screenRoute),
         ],
       ),
     );

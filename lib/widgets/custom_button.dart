@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 
 Color color1 = const Color.fromARGB(255, 103, 185, 226);
 Color color2 = const Color.fromARGB(255, 115, 237, 180);
-
 class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
     required this.title,
     required this.onPressed,
     this.width = 220,
-    // this.isNotSelected = false,
     this.color = const [Colors.white, Colors.white],
     this.textColor = Colors.black,
   });

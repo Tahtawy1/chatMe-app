@@ -1,7 +1,6 @@
-import 'package:chat_me/views/log_in_screen.dart';
-import 'package:chat_me/views/widgets/custom_button.dart';
-import 'package:chat_me/views/widgets/custom_text.dart';
-import 'package:chat_me/views/widgets/phone_maket.dart';
+import 'package:chat_me/widgets/custom_button.dart';
+import 'package:chat_me/widgets/custom_text.dart';
+import 'package:chat_me/widgets/phone_maket.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeViewBody extends StatelessWidget {
